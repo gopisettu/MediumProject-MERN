@@ -1,0 +1,42 @@
+POST http://localhost:4321/signup
+Content-Type: application/json
+
+{
+    "userId": "12",
+    "userName": "Mohan",
+    "userPassword": "4321"
+}
+###
+POST http://localhost:4321/login
+Content-Type: application/json
+
+{
+    "userName": "Mohan",
+    "userPassword": "4321"
+}
+
+###
+
+
+POST http://localhost:4321/postArticle
+Content-Type: application/json
+
+{
+    "title": "My third Article",
+    "content": "This is the content of my third article."
+}
+
+###
+POST http://localhost:4321/postArticle
+Content-Type: application/json
+
+{
+    "title": "My First Article",
+    "content": "This is the content of my first article."
+}
+###
+Delete  http://localhost:4321/deleteArticle/12
+###
+Get http://localhost:4321/articles
+###
+Get http://localhost:4321/articles

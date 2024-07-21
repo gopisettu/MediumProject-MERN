@@ -1,0 +1,35 @@
+/* App.css */
+.App {
+  background-color: #62a0dd; /* Light grey background for the app */
+  color: #343a40; /* Dark grey text color */
+  background-image: url('images (1).jpeg'); /* Replace with your image path */
+  background-size: cover; /* Make sure the background covers the entire area */
+  background-position: center; /* Center the background image */
+  background-repeat: no-repeat; /* Prevent the background from repeating */
+  min-height: 100vh; /* Ensure the App covers at least the viewport height */
+  margin: 0; /* Remove default margin */
+}
+
+.navbar-brand {
+  font-size: 24px; /* Larger font size for the brand name */
+}
+
+.nav-link {
+  margin: 0 20px; 
+  font-size: 18px; /* Adjusted font size for better readability */
+  color: #007bff !important; /* Link color */
+}
+
+.nav-link:hover {
+  color: #0056b3 !important; /* Link color on hover */
+}
+
+.content {
+  padding: 20px;
+}
+
+@media (max-width: 768px) {
+  .nav-link {
+    margin: 5px 0; /* Reduce margin for smaller screens */
+  }
+}
