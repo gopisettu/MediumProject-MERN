@@ -198,6 +198,148 @@ app.put('/updateArticle/:id', async (req, res) => {
   }
 });
 
+app.get('/articles', async (req, res) => {
+  try {
+    const articles = await Article.aggregate([
+      {
+        $lookup: {
+          from: 'userdetails',
+          localField: 'userId',
+          foreignField: 'userId',
+          as: 'user'
+        }
+      },
+      {
+        $unwind: '$user'
+      },
+      {
+        $project: {
+          _id: 1,
+          userId: 1,
+          title: 1,
+          content: 1,
+          datePosted: 1,
+          userName: '$user.userName'
+        }
+      }
+    ]);
+    res.json(articles);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// New endpoint to get post count for a user
+app.get('/posts/count/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const postCount = await Article.countDocuments({ userId });
+    res.json({ count: postCount });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.get('/articles', async (req, res) => {
+  try {
+    const articles = await Article.aggregate([
+      {
+        $lookup: {
+          from: 'userdetails',
+          localField: 'userId',
+          foreignField: 'userId',
+          as: 'user'
+        }
+      },
+      {
+        $unwind: '$user'
+      },
+      {
+        $project: {
+          _id: 1,
+          userId: 1,
+          title: 1,
+          content: 1,
+          datePosted: 1,
+          userName: '$user.userName'
+        }
+      }
+    ]);
+    res.json(articles);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Endpoint to post a new article
+app.post('/postArticle', async (req, res) => {
+  try {
+    const { userId, title, content } = req.body;
+
+    if (!userId || !title || !content) {
+      return res.status(400).json({ message: 'User ID, title, and content are required' });
+    }
+
+    const newArticle = new Article({
+      userId,
+      title,
+      content,
+    });
+
+    await newArticle.save();
+    res.json({ message: 'Article posted successfully' });
+  } catch (error) {
+    console.error('Error posting article:', error.message);
+    res.status(500).json({ error: 'Error posting article: ' + error.message });
+  }
+});
+
+// Endpoint to get post count for a user
+app.get('/posts/count/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const postCount = await Article.countDocuments({ userId });
+    res.json({ count: postCount });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+
+
+app.get('/articles', async (req, res) => {
+  try {
+    const articles = await Article.aggregate([
+      {
+        $lookup: {
+          from: 'userdetails', // The name of the User collection
+          localField: 'userId',
+          foreignField: 'userId',
+          as: 'user'
+        }
+      },
+      {
+        $unwind: '$user'
+      },
+      {
+        $project: {
+          _id: 1,
+          userId: 1,
+          title: 1,
+          content: 1,
+          datePosted: 1,
+          userName: '$user.userName'
+        }
+      }
+    ]);
+    res.json(articles);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+
+
 
 // Start the server
 app.listen(4321, () => {
